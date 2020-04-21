@@ -1,5 +1,5 @@
 # Usage
 
-./gradlew run --args='old new'
+./gradlew run --args='olddb newdb'
 
 (add dbs to root)
