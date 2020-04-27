@@ -82,7 +82,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\DiffExcel.jar;%APP_HOME%\lib\poi-ooxml-4.1.2.jar;%APP_HOME%\lib\poi-4.1.2.jar;%APP_HOME%\lib\poi-ooxml-schemas-4.1.2.jar;%APP_HOME%\lib\commons-collections4-4.4.jar;%APP_HOME%\lib\commons-compress-1.20.jar;%APP_HOME%\lib\xmlbeans-3.1.0.jar;%APP_HOME%\lib\commons-codec-1.13.jar;%APP_HOME%\lib\commons-math3-3.6.1.jar;%APP_HOME%\lib\SparseBitSet-1.2.jar;%APP_HOME%\lib\curvesapi-1.06.jar
+set CLASSPATH=%APP_HOME%\lib\DiffExcel.jar;%APP_HOME%\lib\poi-ooxml-4.1.2.jar;%APP_HOME%\lib\poi-4.1.2.jar;%APP_HOME%\lib\poi-ooxml-schemas-4.1.2.jar;%APP_HOME%\lib\commons-collections4-4.4.jar;%APP_HOME%\lib\commons-compress-1.20.jar;%APP_HOME%\lib\xmlbeans-3.1.0.jar;%APP_HOME%\lib\text-table-formatter-1.2.4.jar;%APP_HOME%\lib\commons-codec-1.13.jar;%APP_HOME%\lib\commons-math3-3.6.1.jar;%APP_HOME%\lib\SparseBitSet-1.2.jar;%APP_HOME%\lib\curvesapi-1.06.jar
 
 @rem Execute DiffExcel
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %DIFF_EXCEL_OPTS%  -classpath "%CLASSPATH%" diffexcel.DiffExcel %CMD_LINE_ARGS%

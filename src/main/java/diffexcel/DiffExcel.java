@@ -8,13 +8,24 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.nocrala.tools.texttablefmt.BorderStyle;
+import org.nocrala.tools.texttablefmt.CellStyle;
+import org.nocrala.tools.texttablefmt.ShownBorders;
+import org.nocrala.tools.texttablefmt.Table;
+
 
 public class DiffExcel	{
 
 	static String sheetName = new String();
 	static int sheetNum = 0;
+	static String foodName = new String();
+	static String cell = new String();
+	static String cell1 = new String();
+	static String cell2 = new String();
+	static Table table = new Table(5, BorderStyle.DESIGN_TUBES_WIDE, ShownBorders.HEADER_AND_COLUMNS);
 
 	public static void main(String[] args)	{
+
 		try	{
 			FileInputStream db1 = new FileInputStream(new File(args[0]));
 			FileInputStream db2 = new FileInputStream(new File(args[1]));
@@ -24,8 +35,14 @@ public class DiffExcel	{
 
 			for (int i = 0; i < wb1.getNumberOfSheets(); i++)	{
 
-				sheetName = wb1.getSheetName(i);
-				sheetNum = i;
+				System.out.println("Sheet: "+wb1.getSheetName(i)+"\n");
+
+				table = new Table(5, BorderStyle.DESIGN_TUBES_WIDE, ShownBorders.HEADER_AND_COLUMNS);
+				table.addCell("Row number");
+				table.addCell("Food");
+				table.addCell("Column name");
+				table.addCell("File 1");
+				table.addCell("File 2");
 
 				if (compareSheets(wb1.getSheetAt(i), wb2.getSheetAt(i)))	{
 					System.out.println("\nThe two sheets are equal.");
@@ -58,11 +75,14 @@ public class DiffExcel	{
 
 			if (!(compareRows(r0, r1, r2)))	{
 				equalSheets = false;
-				System.out.println("Row number: "+(i+1));
-				System.out.println("Sheet name: "+sheetName);
-				System.out.println("---------------------------");
+				table.addCell(""+(i+1));
+				table.addCell(foodName);
+				table.addCell(cell);
+				table.addCell(cell1);
+				table.addCell(cell2);
 			}
 		}
+		System.out.println(table.render());
 		return equalSheets;
 	}
 	static boolean compareRows(XSSFRow r0, XSSFRow r1, XSSFRow r2)	{
@@ -91,10 +111,8 @@ public class DiffExcel	{
 				cellName.setCellType(CellType.STRING);
 				food.setCellType(CellType.STRING);
 
-				System.out.println("Food: "+food.getStringCellValue());
-				System.out.println("Cell name: "+cellName.getStringCellValue());
-				System.out.println("Cell number: "+(i+1));
-				//break;
+				foodName = food.getStringCellValue();
+				cell = cellName.getStringCellValue();
 			}
 		}
 		return equalRows;
@@ -107,7 +125,8 @@ public class DiffExcel	{
 
 		else if ((c1 == null) && (c2 != null))	{
 			c2.setCellType(CellType.STRING);
-			System.out.println("C1: \nC2: "+c2.getStringCellValue());
+			cell1 = "";
+			cell2 = c2.getStringCellValue();
 			return false;
 		}
 
@@ -117,7 +136,9 @@ public class DiffExcel	{
 			if (c1.getStringCellValue().equals(""))
 				return true;
 
-			System.out.println("C1: "+c1.getStringCellValue()+"\nC2: ");
+			cell1 = c1.getStringCellValue();
+			cell2 = "";
+
 			return false;
 		}
 
@@ -127,7 +148,8 @@ public class DiffExcel	{
 			if (c1.getStringCellValue().equals(c2.getStringCellValue()))
 				return true;
 			else	{
-				System.out.println("C1: "+c1.getStringCellValue()+"\nC2: "+c2.getStringCellValue());
+				cell1 = c1.getStringCellValue();
+				cell2 = c2.getStringCellValue();
 				return false;
 			}
 		}
