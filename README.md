@@ -1,3 +1,5 @@
 # Usage
 
-./gradlew run --args='databases/db_2019.xlsx databases/db_2020.xlsx'
+./gradlew run --args='olddb newdb' > output.txt
+
+(add dbs to root)
