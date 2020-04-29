@@ -21,7 +21,10 @@ public class DiffExcel	{
 	static String cell = new String();
 	static String cell1 = new String();
 	static String cell2 = new String();
-	static Table table = new Table(5, BorderStyle.DESIGN_TUBES_WIDE, ShownBorders.HEADER_AND_COLUMNS);
+	static Table table = null;
+
+	//static XXSFCell cellName = null;
+	//static XSSFCell food = null;
 
 	public static void main(String[] args)	{
 
@@ -35,6 +38,8 @@ public class DiffExcel	{
 			for (int i = 0; i < wb1.getNumberOfSheets(); i++)	{
 
 				System.out.println("Sheet: "+wb1.getSheetName(i)+"\n");
+
+				sheetNum = i;
 
 				table = new Table(5, BorderStyle.DESIGN_TUBES_WIDE, ShownBorders.HEADER_AND_COLUMNS);
 				table.addCell("Row number");
@@ -89,6 +94,10 @@ public class DiffExcel	{
 			return true;
 		}
 		else if ((r1 == null) || (r2 == null))	{
+			foodName = "***NEW ROW***";
+			cell = "";
+			cell1 = "";
+			cell2 = "";
 			return false;
 		}
 
@@ -137,20 +146,19 @@ public class DiffExcel	{
 
 			cell1 = c1.getStringCellValue();
 			cell2 = "";
-
 			return false;
 		}
 
 		else if ((c1 != null) && (c2 != null))	{
 			c1.setCellType(CellType.STRING);
 			c2.setCellType(CellType.STRING);
+
 			if (c1.getStringCellValue().equals(c2.getStringCellValue()))
 				return true;
-			else	{
-				cell1 = c1.getStringCellValue();
-				cell2 = c2.getStringCellValue();
-				return false;
-			}
+
+			cell1 = c1.getStringCellValue();
+			cell2 = c2.getStringCellValue();
+			return false;
 		}
 		return false;
 	}
