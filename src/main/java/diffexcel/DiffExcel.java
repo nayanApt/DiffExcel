@@ -23,9 +23,6 @@ public class DiffExcel	{
 	static String cell2 = new String();
 	static Table table = null;
 
-	//static XXSFCell cellName = null;
-	//static XSSFCell food = null;
-
 	public static void main(String[] args)	{
 
 		try	{
@@ -43,17 +40,13 @@ public class DiffExcel	{
 
 				table = new Table(5, BorderStyle.DESIGN_TUBES_WIDE, ShownBorders.HEADER_AND_COLUMNS);
 				table.addCell("Row number");
-				table.addCell("Food");
+				table.addCell("Item");
 				table.addCell("Column name");
 				table.addCell("File 1");
 				table.addCell("File 2");
 
 				if (compareSheets(wb1.getSheetAt(i), wb2.getSheetAt(i)))	{
 					System.out.println("\nThe two sheets are equal.");
-				}
-
-				else	{
-					System.out.println("\nThe two sheets are different.");
 				}
 
 				System.out.println("============================================================");
@@ -132,6 +125,10 @@ public class DiffExcel	{
 		}
 
 		else if ((c1 == null) && (c2 != null))	{
+
+			if (c2.getCellTypeEnum() == CellType.BLANK)
+				return true;
+
 			c2.setCellType(CellType.STRING);
 			cell1 = "";
 			cell2 = c2.getStringCellValue();
@@ -139,17 +136,18 @@ public class DiffExcel	{
 		}
 
 		else if ((c1 != null) && (c2 == null))	{
-			c1.setCellType(CellType.STRING);
 
-			if (c1.getStringCellValue().equals(""))
+			if (c1.getCellTypeEnum() == CellType.BLANK)
 				return true;
 
+			c1.setCellType(CellType.STRING);
 			cell1 = c1.getStringCellValue();
 			cell2 = "";
 			return false;
 		}
 
 		else if ((c1 != null) && (c2 != null))	{
+
 			c1.setCellType(CellType.STRING);
 			c2.setCellType(CellType.STRING);
 
@@ -160,6 +158,6 @@ public class DiffExcel	{
 			cell2 = c2.getStringCellValue();
 			return false;
 		}
-		return false;
+		return true;
 	}
 }
